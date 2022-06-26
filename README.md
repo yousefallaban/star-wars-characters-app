@@ -1,1 +1,1 @@
-# star-wars-characters-app
+# Star Wars Characters App
