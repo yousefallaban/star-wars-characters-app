@@ -1,11 +1,26 @@
+import React from 'react';
+
 import { Container } from '@mui/material';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+
+import useCharactersContext from '../../context/CharactersContext';
+import Characters from '../Characters/Characters';
 
 const Home = () => {
+  const { loading, characters } = useCharactersContext();
+
   return (
     <Container maxWidth="lg">
-      <h2>placeholder homepage</h2>
+      <Backdrop open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      {(!loading && characters.length)
+        ? <Characters />
+        : null
+      }
     </Container>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

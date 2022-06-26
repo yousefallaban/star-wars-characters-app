@@ -1,12 +1,13 @@
-import React, { Suspense } from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
+import React, { Suspense } from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 
-import CircularProgress from '@mui/material/CircularProgress'
+import CircularProgress from '@mui/material/CircularProgress';
 
-import App from './App'
+import App from './App';
+import { CharactersProvider } from './context/CharactersContext';
 
-const rootElement = document.getElementById('root')
+const rootElement = document.getElementById('root');
 
 ReactDOM.createRoot(rootElement).render(
   <Suspense
@@ -15,7 +16,9 @@ ReactDOM.createRoot(rootElement).render(
     }
   >
     <BrowserRouter>
-      <App />
+      <CharactersProvider>
+        <App />
+      </CharactersProvider>
     </BrowserRouter>
   </Suspense>
-)
+);
