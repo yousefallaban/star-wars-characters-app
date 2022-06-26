@@ -15,7 +15,6 @@ export const CharactersProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(`${SW_BASE_URL}/people`);
-        // console.log(data);
         dispatch({
           type: actions.UPDATE_CHARACTERS,
           payload: {

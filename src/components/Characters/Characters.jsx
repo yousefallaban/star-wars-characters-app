@@ -20,10 +20,8 @@ const Characters = () => {
             name={character.name}
             hairColor={character['hair_color']}
             gender={character.gender}
-
           />
         ))}
-
       </Grid>
     </Box>
   );

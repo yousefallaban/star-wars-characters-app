@@ -9,7 +9,6 @@ import Characters from '../Characters/Characters';
 
 const Home = () => {
   const { loading, characters } = useCharactersContext();
-  console.log({ loading });
 
   return (
     <Container maxWidth="lg">
