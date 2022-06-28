@@ -1,4 +1,12 @@
-import React, { createContext, useContext, useReducer, useMemo, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  useMemo,
+  useEffect,
+  useState,
+  useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -12,14 +20,14 @@ export const CharactersProvider = ({ children }) => {
   const [state, dispatch] = useReducer(charactersReducer, initialState);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (url) => {
       try {
-        const { data } = await axios.get(`${SW_BASE_URL}/people`);
+        const { data } = await axios.get(url, { timeout: 10000 });
         dispatch({
           type: actions.UPDATE_CHARACTERS,
           payload: {
-            characters: data.results
-          }
+            characters: data.results,
+          },
         });
       } catch (error) {
         console.error(error.message);
@@ -27,13 +35,49 @@ export const CharactersProvider = ({ children }) => {
       setLoading(false);
     };
 
-    fetchData();
+    fetchData(`${SW_BASE_URL}/people`);
   }, []);
+
+  const filterBySearchTerm = useCallback(
+    (searchTerm) => {
+
+      const filteredCharacters = state.characters.filter(c => {
+        return c.name.toLowerCase().includes(searchTerm.trim().toLowerCase())
+          || c['eye_color'].toLowerCase().includes(searchTerm.trim().toLowerCase())
+          || c['hair_color'].toLowerCase().includes(searchTerm.trim().toLowerCase());
+      });
+
+      dispatch({
+        type: actions.UPDATE_FILTERD_CHARACTERS,
+        payload: {
+          filteredCharacters,
+          searchTerm,
+        },
+      });
+    },
+    [state.characters],
+  );
+
+  const setSearchTerm = useCallback(
+    (searchTerm) => {
+      dispatch({
+        type: actions.UPDATE_SEARCH_TERM,
+        payload: {
+          searchTerm,
+          filteredCharacters: searchTerm.length < 3 ? [] : state.filteredCharacters,
+        },
+      });
+    },
+    [state.filteredCharacters],
+  );
 
   const contextValue = useMemo(() => ({
     ...state,
+    characters: state.filteredCharacters.length ? state.filteredCharacters : state.characters,
+    filterBySearchTerm,
+    setSearchTerm,
     loading,
-  }), [state, loading]);
+  }), [state, loading, filterBySearchTerm, setSearchTerm]);
 
   return (
     <CharactersContext.Provider value={contextValue}>
