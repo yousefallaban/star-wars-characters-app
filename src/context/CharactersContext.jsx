@@ -58,6 +58,19 @@ export const CharactersProvider = ({ children }) => {
     [state.characters],
   );
 
+  const filterByMultiKeyValues = useCallback(
+    (key, values) => {
+      const filteredCharacters = state.characters.filter(value =>  values.includes(value[key]))
+      dispatch({
+        type: actions.UPDATE_FILTERD_CHARACTERS,
+        payload: {
+          filteredCharacters,
+        },
+      });
+    },
+    [state.characters],
+  );
+
   const setSearchTerm = useCallback(
     (searchTerm) => {
       dispatch({
@@ -73,11 +86,13 @@ export const CharactersProvider = ({ children }) => {
 
   const contextValue = useMemo(() => ({
     ...state,
+    charactersData: state.characters,
     characters: state.filteredCharacters.length ? state.filteredCharacters : state.characters,
     filterBySearchTerm,
+    filterByMultiKeyValues,
     setSearchTerm,
     loading,
-  }), [state, loading, filterBySearchTerm, setSearchTerm]);
+  }), [state, loading, filterBySearchTerm, setSearchTerm, filterByMultiKeyValues]);
 
   return (
     <CharactersContext.Provider value={contextValue}>
