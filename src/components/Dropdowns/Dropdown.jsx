@@ -8,6 +8,7 @@ import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
+
 import useCharactersContext from '../../context/CharactersContext';
 
 const ITEM_HEIGHT = 48;
@@ -35,7 +36,6 @@ const Dropdown = ({ option, type }) => {
     filterByMultiKeyValues(`${type}_color`, values);
   };
 
-  console.log({ filterValue });
   return (
     <Box>
       <FormControl sx={{ m: 1, minWidth: 160 }}>

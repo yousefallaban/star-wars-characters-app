@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import charactersReducer, { actions, initialState } from '../reducers/reducers';
+
 import { SW_BASE_URL } from '../lib/config';
 
 export const CharactersContext = createContext(initialState);
