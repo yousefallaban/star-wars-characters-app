@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import useCharactersContext from '../../context/CharactersContext';
 
 const Searchbar = () => {
-  const { filterBySearchTerm , setSearchTerm, searchTerm} = useCharactersContext();
+  const { filterBySearchTerm, setSearchTerm, searchTerm } = useCharactersContext();
 
   const onInputChange = (e) => {
     e.preventDefault();
@@ -17,19 +17,17 @@ const Searchbar = () => {
     }
   };
   return (
-    <>
-      <TextField
-        label="search"
-        variant="outlined"
-        placeholder="By name or eye, hair color"
-        id="characters-search-input"
-        size="medium"
-        sx={{ width: '320px' }}
-        disabled={false}
-        value={searchTerm}
-        onChange={onInputChange}
-      />
-    </>
+    <TextField
+      label="search"
+      variant="outlined"
+      placeholder="By name or eye, hair color"
+      id="characters-search-input"
+      size="medium"
+      sx={{ width: '320px' }}
+      disabled={false}
+      value={searchTerm}
+      onChange={onInputChange}
+    />
   );
 };
 
